@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b147c1d54a74231aa47504b078403d0" Name="Diagram1">
+        <EntityTypeShape EntityType="TradeCompanyModel.Category" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.City" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.Good" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.Manufacturer" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.Region" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.Role" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.Trade" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TradeCompanyModel.User" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Tovar__IDCategor__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Counterpa__IDCit__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK_Goods_Manufacturer" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Manufactu__IDReg__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Counterpa__IDReg__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Trade__IDBUYER__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.FK__Trade__IDSALESMA__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="TradeCompanyModel.GoodHasTovar" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

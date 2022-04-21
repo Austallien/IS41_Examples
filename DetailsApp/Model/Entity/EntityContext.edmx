@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TradeCompanyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Kolvo" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Zena" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GoodHasTovar">
+          <Key>
+            <PropertyRef Name="GoodId" />
+            <PropertyRef Name="TradeId" />
+          </Key>
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="TradeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="SalesmanId" Type="int" Nullable="false" />
+          <Property Name="BuyerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="INN" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Counterpa__IDCit__29572725">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Counterpa__IDReg__286302EC">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manufactu__IDReg__31EC6D26">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manufacturer">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tovar__IDCategor__2F10007B">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trade__IDBUYER__35BCFE0A">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trade">
+              <PropertyRef Name="BuyerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trade__IDSALESMA__34C8D9D1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trade">
+              <PropertyRef Name="SalesmanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodHasTovar_Goods">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="GoodHasTovar" Type="Self.GoodHasTovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodHasTovar">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodHasTovar_Trade">
+          <End Role="Trade" Type="Self.Trade" Multiplicity="1" />
+          <End Role="GoodHasTovar" Type="Self.GoodHasTovar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodHasTovar">
+              <PropertyRef Name="TradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goods_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TradeCompanyModelContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodHasTovar" EntityType="Self.GoodHasTovar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trade" EntityType="Self.Trade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Counterpa__IDCit__29572725" Association="Self.FK__Counterpa__IDCit__29572725">
+            <End Role="City" EntitySet="City" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Counterpa__IDReg__286302EC" Association="Self.FK__Counterpa__IDReg__286302EC">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Manufactu__IDReg__31EC6D26" Association="Self.FK__Manufactu__IDReg__31EC6D26">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tovar__IDCategor__2F10007B" Association="Self.FK__Tovar__IDCategor__2F10007B">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trade__IDBUYER__35BCFE0A" Association="Self.FK__Trade__IDBUYER__35BCFE0A">
+            <End Role="User" EntitySet="User" />
+            <End Role="Trade" EntitySet="Trade" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trade__IDSALESMA__34C8D9D1" Association="Self.FK__Trade__IDSALESMA__34C8D9D1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Trade" EntitySet="Trade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodHasTovar_Goods" Association="Self.FK_GoodHasTovar_Goods">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodHasTovar" EntitySet="GoodHasTovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodHasTovar_Trade" Association="Self.FK_GoodHasTovar_Trade">
+            <End Role="Trade" EntitySet="Trade" />
+            <End Role="GoodHasTovar" EntitySet="GoodHasTovar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goods_Manufacturer" Association="Self.FK_Goods_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TradeCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK__Tovar__IDCategor__2F10007B" FromRole="Category" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Counterpa__IDCit__29572725" FromRole="City" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kolvo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zena" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Tovar__IDCategor__2F10007B" FromRole="Good" ToRole="Category" />
+          <NavigationProperty Name="Manufacturer" Relationship="Self.FK_Goods_Manufacturer" FromRole="Good" ToRole="Manufacturer" />
+          <NavigationProperty Name="Trade" Relationship="Self.GoodHasTovar" FromRole="Good" ToRole="Trade" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK_Goods_Manufacturer" FromRole="Manufacturer" ToRole="Good" />
+          <NavigationProperty Name="Region" Relationship="Self.FK__Manufactu__IDReg__31EC6D26" FromRole="Manufacturer" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Manufacturer" Relationship="Self.FK__Manufactu__IDReg__31EC6D26" FromRole="Region" ToRole="Manufacturer" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Counterpa__IDReg__286302EC" FromRole="Region" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Trade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SalesmanId" Type="Int32" Nullable="false" />
+          <Property Name="BuyerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Trade__IDBUYER__35BCFE0A" FromRole="Trade" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Trade__IDSALESMA__34C8D9D1" FromRole="Trade" ToRole="User" />
+          <NavigationProperty Name="Good" Relationship="Self.GoodHasTovar" FromRole="Trade" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="INN" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FK__Counterpa__IDCit__29572725" FromRole="User" ToRole="City" />
+          <NavigationProperty Name="Region" Relationship="Self.FK__Counterpa__IDReg__286302EC" FromRole="User" ToRole="Region" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Trade" Relationship="Self.FK__Trade__IDBUYER__35BCFE0A" FromRole="User" ToRole="Trade" />
+          <NavigationProperty Name="Trade1" Relationship="Self.FK__Trade__IDSALESMA__34C8D9D1" FromRole="User" ToRole="Trade" />
+        </EntityType>
+        <Association Name="FK__Tovar__IDCategor__2F10007B">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Counterpa__IDCit__29572725">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goods_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manufactu__IDReg__31EC6D26">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manufacturer">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Counterpa__IDReg__286302EC">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trade__IDBUYER__35BCFE0A">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trade">
+              <PropertyRef Name="BuyerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trade__IDSALESMA__34C8D9D1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trade">
+              <PropertyRef Name="SalesmanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GoodHasTovar">
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <End Role="Trade" Type="Self.Trade" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TradeCompanyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="City" EntityType="Self.City" />
+          <EntitySet Name="Good" EntityType="Self.Good" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Trade" EntityType="Self.Trade" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK__Tovar__IDCategor__2F10007B" Association="Self.FK__Tovar__IDCategor__2F10007B">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Counterpa__IDCit__29572725" Association="Self.FK__Counterpa__IDCit__29572725">
+            <End Role="City" EntitySet="City" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goods_Manufacturer" Association="Self.FK_Goods_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Manufactu__IDReg__31EC6D26" Association="Self.FK__Manufactu__IDReg__31EC6D26">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Counterpa__IDReg__286302EC" Association="Self.FK__Counterpa__IDReg__286302EC">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trade__IDBUYER__35BCFE0A" Association="Self.FK__Trade__IDBUYER__35BCFE0A">
+            <End Role="User" EntitySet="User" />
+            <End Role="Trade" EntitySet="Trade" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trade__IDSALESMA__34C8D9D1" Association="Self.FK__Trade__IDSALESMA__34C8D9D1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Trade" EntitySet="Trade" />
+          </AssociationSet>
+          <AssociationSet Name="GoodHasTovar" Association="Self.GoodHasTovar">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Trade" EntitySet="Trade" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TradeCompanyModelContainer" CdmEntityContainer="TradeCompanyEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="TradeCompanyModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Good">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Good">
+              <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Kolvo" ColumnName="Kolvo" />
+                <ScalarProperty Name="Zena" ColumnName="Zena" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturer">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trade">
+            <EntityTypeMapping TypeName="TradeCompanyModel.Trade">
+              <MappingFragment StoreEntitySet="Trade">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SalesmanId" ColumnName="SalesmanId" />
+                <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="TradeCompanyModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GoodHasTovar" TypeName="TradeCompanyModel.GoodHasTovar" StoreEntitySet="GoodHasTovar">
+            <EndProperty Name="Good">
+              <ScalarProperty Name="Id" ColumnName="GoodId" />
+            </EndProperty>
+            <EndProperty Name="Trade">
+              <ScalarProperty Name="Id" ColumnName="TradeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
